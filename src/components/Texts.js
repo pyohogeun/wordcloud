@@ -124,7 +124,7 @@ class Texts extends React.Component {
         fileContent: text
       });
     };
-    reader.readAsText(e.targer.files[0], "EUC-KR");
+    reader.readAsText(e.target.files[0], "EUC-KR");
     this.setState({
       fileName: e.target.value
     });
