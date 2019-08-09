@@ -134,6 +134,21 @@ class Texts extends React.Component {
     const { classes } = this.props;
     return (
       <div>
+        {Object.keys(this.state.texts).map(id => {
+          const text = this.state.texts[id];
+          return (
+            <Card key={id}>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {text.textName}
+                </Typography>
+                <Typography color="textSecondary" gutterBottom>
+                  내용: {text.textContent}
+                </Typography>
+              </CardContent>
+            </Card>
+          );
+        })}
         <Fab
           color="primary"
           className={classes.fab}
@@ -161,6 +176,7 @@ class Texts extends React.Component {
               value={this.state.fileName}
               onChange={this.handleFileChange}
             />
+            <br />
             <label htmlFor="raised-button-file">
               <Button
                 variant="contained"
@@ -173,7 +189,28 @@ class Texts extends React.Component {
                   : this.state.fileName}
               </Button>
             </label>
+            <TextTruncate
+              line={1}
+              truncateText="..."
+              text={this.state.fileContent}
+            />
           </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={this.handleSubmit}
+            >
+              추가
+            </Button>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={this.handleDialogToggle}
+            >
+              닫기
+            </Button>
+          </DialogActions>
         </Dialog>
       </div>
     );
