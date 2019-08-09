@@ -61,44 +61,48 @@ class Words extends React.Component {
       });
   }
   _delete(id) {
-      return fetch(`${databaseURL}/words/${id}.json`), {
-          method: 'DELETE'
-    }).then(res => {
-          if(res.status != 200) {
-              throw new Error(res.statusText);
-          }
-          return res.json();
-      }).then(() => {
+    return fetch(`${databaseURL}/words/${id}.json`, {
+      method: "DELETE"
+    })
+      .then(res => {
+        if (res.status != 200) {
+          throw new Error(res.statusText);
+        }
+        return res.json();
+      })
+      .then(() => {
         let nextState = this.state.words;
         delete nextState[id];
         this.setState({ words: nextState });
       });
   }
+
   componentDidMount() {
     this._get();
   }
-  handleDialogToggle = () => this.setState({
+  handleDialogToggle = () =>
+    this.setState({
       dialog: !this.state.dialog
-  });
-  handleValueChange = (e) => {
-      let nextState = {};
-      nextState[e.target.name] = e.target.value;
-      this.setState(nextState);
-  }
+    });
+  handleValueChange = e => {
+    let nextState = {};
+    nextState[e.target.name] = e.target.value;
+    this.setState(nextState);
+  };
   handleSubmit = () => {
-      const word = {
-          word: this.state.word,
-          weight: this.state.weight
-      }
-      this.handleDialogToggle();
-      if(!word.word && !word.weight){
-          return;
-      }
-      this._post(word);
-  }
-  handleDelete = (id) => {
-      this._delete(id);
-  }
+    const word = {
+      word: this.state.word,
+      weight: this.state.weight
+    };
+    this.handleDialogToggle();
+    if (!word.word && !word.weight) {
+      return;
+    }
+    this._post(word);
+  };
+  handleDelete = id => {
+    this._delete(id);
+  };
   render() {
     return (
       <div>
@@ -111,15 +115,21 @@ class Words extends React.Component {
                   <Typography color="textSecondary" gutterBottom>
                     가중치 : {word.weight}
                   </Typography>
-                  <Grid containder>
-                      <Grid item xs={6}>
-                        <Typography varient="h5" component="h2">
-                            {word.word}
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={6}>
-                          <Button variant="contained" color="primary" onClick={() => this.handleDelete(id)}>삭제</Button>
-                      </Grid>
+                  <Grid container>
+                    <Grid item xs={9}>
+                      <Typography varient="h5" component="h2">
+                        {word.word}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => this.handleDelete(id)}
+                      >
+                        삭제
+                      </Button>
+                    </Grid>
                   </Grid>
                 </CardContent>
               </Card>
