@@ -8,7 +8,7 @@ import Button from "@material-ui/core/Button";
 import Fab from "@material-ui/core/Fab";
 import AddIcon from "@material-ui/icons/Add";
 import Dialog from "@material-ui/core/Dialog";
-import DialogAction from "@material-ui/core/DialogActions";
+import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
@@ -56,7 +56,7 @@ class Words extends React.Component {
       })
       .then(data => {
         let nextState = this.state.words;
-        nextState[data.name] = words;
+        nextState[data.name] = word;
         this.setState({ words: nextState });
       });
   }
@@ -103,7 +103,9 @@ class Words extends React.Component {
   handleDelete = id => {
     this._delete(id);
   };
+
   render() {
+    const { classes } = this.props;
     return (
       <div>
         {Object.keys(this.state.words).map(id => {
@@ -133,6 +135,53 @@ class Words extends React.Component {
                   </Grid>
                 </CardContent>
               </Card>
+              <Fab
+                color="primary"
+                className={classes.fab}
+                onClick={this.handleDialogToggle}
+              >
+                <AddIcon />
+              </Fab>
+              <Dialog
+                open={this.state.dialog}
+                onClose={this.handleDialogtoggle}
+              >
+                <DialogTitle>단어 추가</DialogTitle>
+                <DialogContent>
+                  <TextField
+                    label="단어"
+                    type="text"
+                    name="word"
+                    value={this.state.word}
+                    onChange={this.handleValueChange}
+                  />
+                  <br />
+                  <TextField
+                    label="가중치"
+                    type="text"
+                    name="weight"
+                    value={this.state.weight}
+                    onChange={this.handleValueChange}
+                  />
+                  <br />
+                  <DialogActions>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.handleSubmit}
+                    >
+                      추가
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={this.handleDialogToggle}
+                    >
+                      닫기
+                    </Button>
+                  </DialogActions>
+                </DialogContent>
+              </Dialog>
             </div>
           );
         })}
@@ -141,4 +190,4 @@ class Words extends React.Component {
   }
 }
 
-export default Words;
+export default withStyles(styles)(Words);
