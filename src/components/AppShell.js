@@ -55,6 +55,11 @@ class AppShell extends React.Component {
                 단어 관리
               </Link>
             </MenuItem>
+            <MenuItem onClick={this.handleDrawerToggle}>
+              <Link component={RouterLink} to="/timestamp">
+                시간 기록
+              </Link>
+            </MenuItem>
           </Drawer>
         </div>
         <div id="content" style={{ margin: "auto", marginTop: "20px" }}>
